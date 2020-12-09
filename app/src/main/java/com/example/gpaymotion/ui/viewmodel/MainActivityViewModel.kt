@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinApiExtension
 
 @KoinApiExtension
-class MainActivityViewModel(val contactsRepository: ContactsRepository): ViewModel() {
+class MainActivityViewModel(private val contactsRepository: ContactsRepository): ViewModel() {
     private val _data : MutableLiveData<HomeDataState> = MutableLiveData()
     val homeData: LiveData<HomeDataState> = _data
 
@@ -41,6 +41,10 @@ class MainActivityViewModel(val contactsRepository: ContactsRepository): ViewMod
             list.add(ContactCardList(listOfBusiness.take(4)))
             list.add(ContactCardList(listOfBusiness.subList(5,9)))
             list.add(ContactCardList(listOfBusiness.takeLast(4)))
+            if(list.isEmpty()) {
+                _data.postValue(HomeDataState.Error(Exception("No Data")))
+                return@launch
+            }
             _data.postValue(
                 HomeDataState.Success(
                     list

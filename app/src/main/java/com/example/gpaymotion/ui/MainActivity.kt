@@ -85,8 +85,4 @@ class MainActivity : AppCompatActivity(){
             }
         }
     }
-
-    fun fragmentClosed() {
-        Toast.makeText(this, "Fragment closed", Toast.LENGTH_LONG).show()
-    }
 }
